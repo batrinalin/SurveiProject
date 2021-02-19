@@ -23,16 +23,25 @@ class Survey :ObservableObject{
 
 
 struct ContentView: View {
+    @State private var isNight=false
     @StateObject var surveiObject = Survey(surveyText:["Ce tendinţă prezintă un autoturism cu tracţiune pe spate, dacă acceleraţi prea puternic în curbă?","autoturismul urmează, fără deviere, cursa volanului","autoturismul tinde să derapeze cu spatele spre exteriorul curbei","roţile din faţă se învârtesc în golroţile din faţă se învârtesc în gol"],userAnswers:[false,false,false],answers:[false,true,false],multipleAnsers:false);
     
     var body: some View {
+        
         NavigationView{
+            
             VStack{
+                BackgroundView(isNight: $isNight)
                 SurveyBody()
-                
+                .offset(y:-100)
                 NavigationLink(destination: SecondPage(), label: {
     //                ButtonStyle(title: "Inainte", textColor: Color.blue, backgroundColor: Color.white)
-                    Text("Second page")
+                    Text("Inainte")
+                        .bold()
+                        .frame(width: 200, height: 50, alignment: .center)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 })
             }
         }
@@ -50,17 +59,19 @@ struct SecondPage: View {
 //            .padding(10)
 //            .background(Color.yellow)
 //            .cornerRadius(15)
-        
+        //this propertz hide the back button
+        .navigationBarBackButtonHidden(true)
     }
+    
 }
 
 struct SurveyBody:View{
-    @State private var isNight=false
+    
     
     var body:some View {
     
         ZStack {
-            BackgroundView(isNight: $isNight)
+            
             VStack{
                 QuestionBody(questionColor:Color("questionGradient"))
                 QuestionAnswers()
