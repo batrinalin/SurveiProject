@@ -3,7 +3,7 @@
 //  SurveiProject
 //
 //  Created by Alin Batrin on 06.01.2021.
-//
+//  Second change, just for commit.
 
 import SwiftUI
 
