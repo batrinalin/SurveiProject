@@ -3,7 +3,7 @@
 //  SurveiProject
 //
 //  Created by Alin Batrin on 06.01.2021.
-//
+//  Second page exists.
 
 import SwiftUI
 
@@ -23,20 +23,51 @@ class Survey :ObservableObject{
 
 
 struct ContentView: View {
-    @State private var isNight=false
     @StateObject var surveiObject = Survey(surveyText:["Ce tendinţă prezintă un autoturism cu tracţiune pe spate, dacă acceleraţi prea puternic în curbă?","autoturismul urmează, fără deviere, cursa volanului","autoturismul tinde să derapeze cu spatele spre exteriorul curbei","roţile din faţă se învârtesc în golroţile din faţă se învârtesc în gol"],userAnswers:[false,false,false],answers:[false,true,false],multipleAnsers:false);
     
     var body: some View {
+        NavigationView{
+            VStack{
+                SurveyBody()
+                
+                NavigationLink(destination: SecondPage(), label: {
+    //                ButtonStyle(title: "Inainte", textColor: Color.blue, backgroundColor: Color.white)
+                    Text("Second page")
+                })
+            }
+        }
+        .environmentObject(surveiObject)
+    }
+}
+
+struct SecondPage: View {
+   
+    var body: some View {
+        SurveyBody()
+//        Text("Second page")
+//            .frame(alignment: .top)
+//            .font(.system(size: 20,weight:.bold,design:.default))
+//            .padding(10)
+//            .background(Color.yellow)
+//            .cornerRadius(15)
+        
+    }
+}
+
+struct SurveyBody:View{
+    @State private var isNight=false
+    
+    var body:some View {
+    
         ZStack {
             BackgroundView(isNight: $isNight)
             VStack{
                 QuestionBody(questionColor:Color("questionGradient"))
                 QuestionAnswers()
-                ButtonStyle(title: "Inainte", textColor: Color.blue, backgroundColor: Color.white)
+                
             }
             
         }
-        .environmentObject(surveiObject)
     }
 }
 
@@ -121,11 +152,11 @@ struct ButtonStyle: View {
     @EnvironmentObject var surveiObject:Survey;
     var body: some View {
         Button{
-            print("Schimba la modul de noapte Jonule")
+            print("Handler for button -Inainte-")
             
             //Todo: here do the logic that is validating the ansers
             if(surveiObject.answers[1] == true && surveiObject.answers[1] == surveiObject.userAnswers[1]) {
-                print("SSS")
+                print("Corect answer")
             }
         } label:{
             Text(title)
